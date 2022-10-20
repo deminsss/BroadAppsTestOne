@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol RandomPhotoViewProtocol: AnyObject {
     func sucess()
@@ -10,7 +11,7 @@ protocol RandomPhotoPresenterProtocol: AnyObject {
     var photosResult: [UnsplashPhoto]? {get set}
     func getRandomPhoto()
     func getSearchPhoto(query: String)
-    func tapOnThePhoto(photo: UnsplashPhoto?)
+    func tapOnThePhoto(navigationConroller: UINavigationController, photo: UnsplashPhoto?)
 }
 
 class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
@@ -58,8 +59,8 @@ class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
         }
     }
     
-    func tapOnThePhoto(photo: UnsplashPhoto?) {
-        router?.showDetail(photos: photo)
+    func tapOnThePhoto(navigationConroller: UINavigationController, photo: UnsplashPhoto?) {
+        router?.showDetail(navigationController: navigationConroller, photos: photo)
     }
 }
 

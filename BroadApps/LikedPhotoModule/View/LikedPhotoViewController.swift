@@ -17,6 +17,7 @@ class LikedPhotoViewController: UIViewController {
     }
     
     private func addViews(){
+        view.backgroundColor = .white
         view.addSubviews(likedTableView)
         likedTableView.delegate = self
         likedTableView.dataSource = self

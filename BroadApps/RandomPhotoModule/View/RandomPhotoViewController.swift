@@ -28,6 +28,7 @@ class RandomPhotoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(navigationController)
         view.backgroundColor = .white
         addViews()
         addConstraints()
@@ -55,7 +56,7 @@ class RandomPhotoViewController: UIViewController {
             randomPhotoCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    //MARK: - create collectionViewFlowLayout
+    //MARK: - Сreate collectionViewFlowLayout
     
     private func createLayout() {
         let spacing: CGFloat = 10
@@ -97,7 +98,7 @@ extension RandomPhotoViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let photo = presenter.photosResult?[indexPath.row]
-        presenter.tapOnThePhoto(photo: photo)
+        presenter.tapOnThePhoto(navigationConroller: navigationController!, photo: photo)
     }
 }
 

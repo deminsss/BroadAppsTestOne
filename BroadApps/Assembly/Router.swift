@@ -4,40 +4,50 @@ import UIKit
 protocol RouterMainProtocol {
     var assemblyBuilder: AssemblyBuilder? {get set}
     var tabBarController: UITabBarController? {get set}
-    var navigationController: UINavigationController? {get set}
 }
 
 protocol RouterProtocol: RouterMainProtocol {
     func initionalViewController()
-    func showDetail(photos: UnsplashPhoto?)
+    func showDetail(navigationController: UINavigationController, photos: UnsplashPhoto?)
 }
 
 class Router: RouterProtocol {
-    
-    var navigationController: UINavigationController?
+
     var tabBarController: UITabBarController?
     var assemblyBuilder: AssemblyBuilder?
     
-    init(tabBarController: UITabBarController?, navigationController: UINavigationController?, assamblyBuilder: AssemblyBuilder?) {
+    init(tabBarController: UITabBarController?, assamblyBuilder: AssemblyBuilder?) {
         self.tabBarController = tabBarController
         self.assemblyBuilder = assamblyBuilder
     }
     
     func initionalViewController() {
-        let navigationController = UINavigationController()
-        print(tabBarController?.navigationController)
         guard let tabBarController = tabBarController else { return }
-        guard let randomPhotoViewController = assemblyBuilder?.createRandomPhotoModule(router: self) else { return }
-        navigationController.viewControllers = [randomPhotoViewController]
-        print(tabBarController.navigationController)
-        guard let likedPhotoViewController = assemblyBuilder?.createLikedPhotoModule(router: self) else { return }
-        tabBarController.viewControllers = [navigationController, likedPhotoViewController]
-        print(tabBarController.navigationController)
-        print(tabBarController)
+        guard let randomPhotoVC = assemblyBuilder?.createRandomPhotoModule(router: self) else { return }
+        guard let likedPhotoVC = assemblyBuilder?.createLikedPhotoModule(router: self) else { return }
+        let randomPhotoViewConroller = createViewConreoller(rootViewController: randomPhotoVC,
+                                                            title: "Photos",
+                                                            image: UIImage(named: "camera")!)
+        let likedPhotoViewController = createViewConreoller(rootViewController: likedPhotoVC,
+                                                            title: "Favorites",
+                                                            image: UIImage(named: "heart")!)
+        
+        tabBarController.viewControllers = [randomPhotoViewConroller, likedPhotoViewController]
+        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.tintColor = .black
     }
     
-    func showDetail(photos: UnsplashPhoto?) {
+    func showDetail(navigationController: UINavigationController,photos: UnsplashPhoto?) {
         guard let detailViewController = assemblyBuilder?.createDetailPhotoModule(router: self, photo: photos) else { return }
-        tabBarController?.navigationController?.pushViewController(detailViewController, animated: true)
+        navigationController.pushViewController(detailViewController, animated: true)
+    }
+    
+    private func createViewConreoller(rootViewController: UIViewController, title: String, image: UIImage) -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.tabBarItem = UITabBarItem(title: title,
+                                                       image: image,
+                                                       selectedImage: image)
+        return navigationController
     }
 }
+

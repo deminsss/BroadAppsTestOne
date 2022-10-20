@@ -10,11 +10,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         let tabBarController = UITabBarController()
-        let navigationController = UINavigationController()
         let assamblyBuilder = AssemblyModuleBuilder()
-        let router = Router(tabBarController: tabBarController, navigationController: navigationController, assamblyBuilder: assamblyBuilder)
+        let router = Router(tabBarController: tabBarController, assamblyBuilder: assamblyBuilder)
         router.initionalViewController()
- 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
@@ -33,14 +31,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) {
     }
-
-    //        tabBarController.tabBar.backgroundColor = .white
-    //        tabBarController.tabBar.tintColor = .black
-    //        tabBarController.viewControllers = [RandomPhotoVC]
-    //        RandomPhotoVC.tabBarItem = UITabBarItem(title: "Search",
-    //                                            image: UIImage(named: "camera"),
-    //                                            selectedImage: UIImage(named: "camera"))
-
-    
 }
 

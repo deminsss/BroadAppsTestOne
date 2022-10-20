@@ -7,4 +7,5 @@ target 'BroadApps' do
 
   # Pods for BroadApps
 	pod 'Kingfisher', '~> 7.0'
+	pod 'RealmSwift', '~>10'
 end

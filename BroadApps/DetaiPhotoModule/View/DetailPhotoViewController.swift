@@ -32,23 +32,35 @@ class DetailPhotoViewController: UIViewController {
         return label
     }()
     
+    private var likeBarItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem()
+        barButtonItem.image = UIImage(named: "heart")
+        barButtonItem.style = .plain
+        barButtonItem.action = #selector(liked(sender:))
+        return barButtonItem
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
         addConstraints()
         presenter.setPhoto()
     }
+    
     private func addViews() {
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
+        navigationItem.rightBarButtonItem = likeBarItem
+        likeBarItem.target = self
         view.addSubviews(detailImageView, detailAutorLabel, detailCreateDateLabel, detailLocationLabel, detailDownloadLabel)
     }
+    
     private func addConstraints() {
         NSLayoutConstraint.activate([
             detailImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             detailImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             detailImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            detailImageView.heightAnchor.constraint(equalToConstant: view.frame.height / 1.5),
+            detailImageView.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
             
             detailAutorLabel.topAnchor.constraint(equalTo: detailImageView.bottomAnchor, constant: 10),
             detailAutorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -68,6 +80,12 @@ class DetailPhotoViewController: UIViewController {
             detailDownloadLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
     }
+    
+    @objc func liked(sender: Any) {
+        likeBarItem.image = UIImage(named: "blackHeart")
+    }
+    
+    
 }
 
 extension DetailPhotoViewController: DetailPhotoViewProtocol {
