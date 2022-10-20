@@ -7,7 +7,6 @@ protocol RealmManagerProtocol {
     func getPhotos() -> Results<PhotosModel> 
 }
 
-
 final class RealmManager: RealmManagerProtocol {
     //MARK: - RealmManager property
     
@@ -18,7 +17,6 @@ final class RealmManager: RealmManagerProtocol {
     func savePhotosModel(model: PhotosModel) {
         try! localRealm.write {
             localRealm.add(model)
-            
         }
     }
     //MARK: - Delete model method

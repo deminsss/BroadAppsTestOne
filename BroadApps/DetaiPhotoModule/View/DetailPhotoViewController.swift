@@ -102,17 +102,24 @@ final class DetailPhotoViewController: UIViewController {
 
 extension DetailPhotoViewController: DetailPhotoViewProtocol {
     
-    func setPhoto(photo: UnsplashPhoto?) {
-        detailImageView.kf.setImage(with: URL(string: photo?.urls.small ?? ""))
-        detailAutorLabel.text = "Имя автора: " + (photo?.user?.name ?? "")
-        detailCreateDateLabel.text = "Дата создания: " + (photo?.created_at ?? "")
-        if photo?.location?.name != nil {
-            detailLocationLabel.text = "Местоположение: " + (photo?.location?.name)!
-        }
-        detailDownloadLabel.text = "Количество скачиваний: " + "\(photo!.downloads)"
+    func setInfoFromPastViewController(info: UnsplashPhoto?) {
+        
         let comingPhotoModel = PhotosModel()
-        comingPhotoModel.autorName = photo?.user?.name ?? ""
-        comingPhotoModel.imageURL = photo?.urls.small ?? ""
+        guard let photo = info else { return}
+        detailCreateDateLabel.text = "Дата создания: " + (photo.created_at)
+        detailDownloadLabel.text = "Количество скачиваний: " + "\(photo.downloads)"
+        
+        if let locationName = photo.location?.name {
+            detailLocationLabel.text = "Местоположение: " + locationName
+        }
+        if let userName = photo.user?.name {
+            detailAutorLabel.text = "Имя автора: " + userName
+            comingPhotoModel.autorName = userName
+        }
+        if let photoURL = photo.urls.small {
+            detailImageView.kf.setImage(with: URL(string: photoURL))
+            comingPhotoModel.imageURL = photoURL
+        }
         photoModel = comingPhotoModel
     }
 }

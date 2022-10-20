@@ -15,7 +15,9 @@ protocol RandomPhotoPresenterProtocol: AnyObject {
     var photosResult: [UnsplashPhoto]? {get set}
     func getRandomPhoto()
     func getSearchPhoto(query: String)
-    func tapOnThePhoto(navigationConroller: UINavigationController, photo: UnsplashPhoto?)
+    func tapOnThePhoto(navigationConroller: UINavigationController, info: UnsplashPhoto?)
+    func numberOfItems(in section: Int) -> Int
+    func getPhotoUrl(for indexpath : Int) -> String?
 }
 
 final class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
@@ -73,8 +75,20 @@ final class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
     
     //MARK: - Push navigation pethod
     
-    func tapOnThePhoto(navigationConroller: UINavigationController, photo: UnsplashPhoto?) {
-        router?.showDetail(navigationController: navigationConroller, photos: photo)
+    func tapOnThePhoto(navigationConroller: UINavigationController, info: UnsplashPhoto?) {
+        router?.showDetail(navigationController: navigationConroller, info: info)
+    }
+    
+    //MARK: - Number of items method
+    
+    func numberOfItems(in section: Int) -> Int {
+        return photosResult?.count ?? 0
+    }
+    
+    //MARK: - Get photo url method
+    
+    func getPhotoUrl(for indexpath : Int) -> String? {
+        return photosResult?[indexpath].urls.small
     }
 }
 

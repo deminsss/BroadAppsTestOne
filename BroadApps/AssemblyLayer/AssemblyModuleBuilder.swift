@@ -4,7 +4,7 @@ import UIKit
 
 protocol AssemblyBuilder {
     func createRandomPhotoModule(router: RouterProtocol) -> UIViewController
-    func createDetailPhotoModule(router: RouterProtocol, photo: UnsplashPhoto?) -> UIViewController
+    func createDetailPhotoModule(router: RouterProtocol, info: UnsplashPhoto?) -> UIViewController
     func createLikedPhotoModule(router: RouterProtocol) -> UIViewController
 }
 
@@ -32,10 +32,10 @@ final class AssemblyModuleBuilder: AssemblyBuilder {
     
     //MARK: - Create detail photo module
 
-    func createDetailPhotoModule(router: RouterProtocol, photo: UnsplashPhoto?) -> UIViewController {
+    func createDetailPhotoModule(router: RouterProtocol, info: UnsplashPhoto?) -> UIViewController {
         let view = DetailPhotoViewController()
         let realm = RealmManager()
-        let presenter = DetailPhotoPresenter(view: view, photo: photo, realm: realm)
+        let presenter = DetailPhotoPresenter(view: view, info: info, realm: realm)
         view.presenter = presenter
         return view
     }

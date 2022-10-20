@@ -23,12 +23,11 @@ enum Section {
         return components.url!
     }
     //MARK: - Generate URL(RandomPhoto module)
-
     var URLrequest: URLRequest {
         var request = URLRequest(url: urlComponents)
         request.httpMethod = "GET"
         var header = [String: String]()
-        header["Authorization"] = "Client-ID RlUaOym7xx68mi99YKMBiNMS5mBjObVe_cJ8UBjqAaE"
+        header["Authorization"] = "Client-ID x259sosyrpvGiCk8e-5KehGZdz63ehssYPyurd4vb1w"
         request.allHTTPHeaderFields = header
         return request
     }

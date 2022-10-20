@@ -44,6 +44,13 @@ final class LikedPhotoViewController: UIViewController {
             likedTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    //MARK: - Number of items method
+    
+    private func numberOfItems(in section: Int) -> Int {
+        return favoritsPhotos?.count ?? 0
+    }
+    
 }
 
 //MARK: - Implementation tableview
@@ -53,16 +60,26 @@ extension LikedPhotoViewController: UITableViewDelegate, UITableViewDataSource {
     //MARK: - Number of cells
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoritsPhotos?.count ?? 0
+        self.numberOfItems(in: section)
     }
     
     //MARK: - Cells implementation
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard
+            let cell = likedTableView.dequeueReusableCell(withIdentifier: LikedTableViewCell.identifier,
+                                                          for: indexPath) as? LikedTableViewCell
+        else {
+            return UITableViewCell()
+        }
         
-        let cell = likedTableView.dequeueReusableCell(withIdentifier: LikedTableViewCell.identifier, for: indexPath) as! LikedTableViewCell
-        cell.likedLabel.text = favoritsPhotos?[indexPath.row].autorName
-        cell.likedImageView.kf.setImage(with: URL(string: (favoritsPhotos?[indexPath.row].imageURL)!))
+        if let autorName = favoritsPhotos?[indexPath.row].autorName {
+            cell.likedLabel.text = autorName
+        }
+        
+        if let imageUrl = favoritsPhotos?[indexPath.row].imageURL {
+            cell.likedImageView.kf.setImage(with: URL(string: (imageUrl)))
+        }
         return cell
     }
     
@@ -79,7 +96,8 @@ extension LikedPhotoViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            presenter.deleteModel(model: favoritsPhotos![indexPath.row])
+            guard let favoritsPhotos = favoritsPhotos else { return }
+            presenter.deleteModel(model: favoritsPhotos[indexPath.row])
             likedTableView.reloadData()
         }
     }

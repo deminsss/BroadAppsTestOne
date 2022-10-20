@@ -12,7 +12,7 @@ protocol RouterMainProtocol {
 
 protocol RouterProtocol: RouterMainProtocol {
     func initionalViewController()
-    func showDetail(navigationController: UINavigationController, photos: UnsplashPhoto?)
+    func showDetail(navigationController: UINavigationController, info: UnsplashPhoto?)
 }
 
 //MARK: - Router protocol
@@ -35,9 +35,10 @@ final class Router: RouterProtocol {
     //MARK: - Initional method
 
     func initionalViewController() {
-        guard let tabBarController = tabBarController else { return }
-        guard let randomPhotoVC = assemblyBuilder?.createRandomPhotoModule(router: self) else { return }
-        guard let likedPhotoVC = assemblyBuilder?.createLikedPhotoModule(router: self) else { return }
+        guard let tabBarController = tabBarController,
+              let randomPhotoVC = assemblyBuilder?.createRandomPhotoModule(router: self),
+              let likedPhotoVC = assemblyBuilder?.createLikedPhotoModule(router: self)
+        else { return }
         let randomPhotoViewConroller = createViewConreoller(rootViewController: randomPhotoVC,
                                                             title: "Photos",
                                                             image: UIImage(named: "camera")!)
@@ -52,9 +53,9 @@ final class Router: RouterProtocol {
     
     //MARK: - Show detail viewcontroller method
 
-    func showDetail(navigationController: UINavigationController, photos: UnsplashPhoto?) {
+    func showDetail(navigationController: UINavigationController, info: UnsplashPhoto?) {
         guard let detailViewController = assemblyBuilder?.createDetailPhotoModule(router: self,
-                                                                                  photo: photos) else { return }
+                                                                                  info: info) else { return }
         navigationController.pushViewController(detailViewController, animated: true)
     }
     

@@ -12,7 +12,6 @@ final class RandomPhotoViewController: UIViewController {
         var searchBar = UISearchBar()
         searchBar.placeholder = "Search"
         searchBar.barStyle = .black
-        searchBar.isTranslucent = true
         searchBar.searchTextField.leftView?.tintColor = .black
         searchBar.searchTextField.backgroundColor = .white
         searchBar.layer.cornerRadius = 10
@@ -81,7 +80,6 @@ final class RandomPhotoViewController: UIViewController {
         section.interGroupSpacing = spacing
         
         let layout = UICollectionViewCompositionalLayout(section: section)
-        
         randomPhotoCollectionView.collectionViewLayout = layout
     }
 }
@@ -93,15 +91,19 @@ extension RandomPhotoViewController: UICollectionViewDataSource, UICollectionVie
     //MARK: - Number of cells
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.photosResult?.count ?? 0
+        return presenter.numberOfItems(in: section)
     }
     
     //MARK: - Cells implementation
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = randomPhotoCollectionView.dequeueReusableCell(withReuseIdentifier: RandomPhotoCollectionViewCell.identifier,
-                                                                 for: indexPath) as! RandomPhotoCollectionViewCell
-        if let imageURL = presenter.photosResult?[indexPath.row].urls.small{
+        guard
+            let cell = randomPhotoCollectionView.dequeueReusableCell(withReuseIdentifier: RandomPhotoCollectionViewCell.identifier,
+                                                                 for: indexPath) as? RandomPhotoCollectionViewCell
+        else { return UICollectionViewCell()
+        }
+
+        if let imageURL = presenter.getPhotoUrl(for: indexPath.row) {
             cell.randomPhotoImageView.kf.setImage(with: URL(string: imageURL))
         }
         return cell
@@ -110,8 +112,8 @@ extension RandomPhotoViewController: UICollectionViewDataSource, UICollectionVie
     //MARK: - Push navigation method
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photo = presenter.photosResult?[indexPath.row]
-        presenter.tapOnThePhoto(navigationConroller: navigationController!, photo: photo)
+        let info = presenter.photosResult?[indexPath.row]
+        presenter.tapOnThePhoto(navigationConroller: navigationController!, info: info)
     }
 }
 
@@ -137,7 +139,7 @@ extension RandomPhotoViewController: RandomPhotoViewProtocol {
         alert(title: "Ой", message: "Что-то пошло не так, попробуйте позже", style: .default)
     }
     
-    func alert(title: String, message: String, style: UIAlertViewStyle) {
+    private func alert(title: String, message: String, style: UIAlertViewStyle) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         present(alert, animated: true)
