@@ -22,7 +22,8 @@ enum Section {
         }
         return components.url!
     }
-    
+    //MARK: - Generate URL(RandomPhoto module)
+
     var URLrequest: URLRequest {
         var request = URLRequest(url: urlComponents)
         request.httpMethod = "GET"

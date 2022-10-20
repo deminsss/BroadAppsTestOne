@@ -1,10 +1,14 @@
 import Foundation
 import UIKit
 
+//MARK: - View protocol
+
 protocol RandomPhotoViewProtocol: AnyObject {
     func sucess()
     func failure(error: Error)
 }
+
+//MARK: - Presenter protocol
 
 protocol RandomPhotoPresenterProtocol: AnyObject {
     init( view: RandomPhotoViewProtocol, networkService: RandomPhotoNetworkServiceProtocol, router: RouterProtocol)
@@ -14,12 +18,16 @@ protocol RandomPhotoPresenterProtocol: AnyObject {
     func tapOnThePhoto(navigationConroller: UINavigationController, photo: UnsplashPhoto?)
 }
 
-class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
+final class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
+    
+    //MARK: - Presenter property
     
     var photosResult: [UnsplashPhoto]?
     var router: RouterProtocol?
     weak var view: RandomPhotoViewProtocol!
     var networkService: RandomPhotoNetworkServiceProtocol!
+    
+    //MARK: - Presenter init
     
     required init(view: RandomPhotoViewProtocol, networkService: RandomPhotoNetworkServiceProtocol, router: RouterProtocol) {
         self.view = view
@@ -27,6 +35,8 @@ class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
         self.router = router
         getRandomPhoto()
     }
+    
+    //MARK: - Get random photo method
     
     func getRandomPhoto() {
         networkService.getRandomPhotos { [weak self] result in
@@ -44,6 +54,8 @@ class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
         }
     }
     
+    //MARK: - Get a photo after the search method
+    
     func getSearchPhoto(query: String) {
         networkService.getSearchPhotos(query: query) { [weak self] result in
             guard let self = self else {return}
@@ -58,6 +70,8 @@ class RandomPhotoPresenter: RandomPhotoPresenterProtocol {
             }
         }
     }
+    
+    //MARK: - Push navigation pethod
     
     func tapOnThePhoto(navigationConroller: UINavigationController, photo: UnsplashPhoto?) {
         router?.showDetail(navigationController: navigationConroller, photos: photo)

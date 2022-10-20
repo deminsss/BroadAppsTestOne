@@ -13,6 +13,8 @@
 		328E78F128FFA1150035AAD7 /* LikedPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328E78F028FFA1150035AAD7 /* LikedPhotoViewController.swift */; };
 		328E78F628FFB4F20035AAD7 /* LikedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328E78F528FFB4F20035AAD7 /* LikedTableViewCell.swift */; };
 		328E78F928FFC1320035AAD7 /* LikedPhotoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328E78F828FFC1320035AAD7 /* LikedPhotoPresenter.swift */; };
+		328F877B2900FCEA003BD8FD /* RealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F877A2900FCEA003BD8FD /* RealmObject.swift */; };
+		328F877D2900FD44003BD8FD /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F877C2900FD44003BD8FD /* RealmManager.swift */; };
 		32F01EDE28FDEA2400F1DF59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F01EDD28FDEA2400F1DF59 /* AppDelegate.swift */; };
 		32F01EE028FDEA2400F1DF59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F01EDF28FDEA2400F1DF59 /* SceneDelegate.swift */; };
 		32F01EE228FDEA2400F1DF59 /* RandomPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F01EE128FDEA2400F1DF59 /* RandomPhotoViewController.swift */; };
@@ -35,6 +37,8 @@
 		328E78F028FFA1150035AAD7 /* LikedPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPhotoViewController.swift; sourceTree = "<group>"; };
 		328E78F528FFB4F20035AAD7 /* LikedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedTableViewCell.swift; sourceTree = "<group>"; };
 		328E78F828FFC1320035AAD7 /* LikedPhotoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPhotoPresenter.swift; sourceTree = "<group>"; };
+		328F877A2900FCEA003BD8FD /* RealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObject.swift; sourceTree = "<group>"; };
+		328F877C2900FD44003BD8FD /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		32F01EDA28FDEA2400F1DF59 /* BroadApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BroadApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F01EDD28FDEA2400F1DF59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32F01EDF28FDEA2400F1DF59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,13 +121,31 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		328E78FB28FFC74E0035AAD7 /* Assembly */ = {
+		328F87772900FC82003BD8FD /* ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				328F87792900FCD8003BD8FD /* Realm */,
+				32F01EFB28FDFDC200F1DF59 /* NetworkService */,
+			);
+			path = ServiceLayer;
+			sourceTree = "<group>";
+		};
+		328F87782900FCAD003BD8FD /* AssemblyLayer */ = {
 			isa = PBXGroup;
 			children = (
 				32F01F0428FE1B4400F1DF59 /* AssemblyModuleBuilder.swift */,
 				328E78EC28FF80760035AAD7 /* Router.swift */,
 			);
-			path = Assembly;
+			path = AssemblyLayer;
+			sourceTree = "<group>";
+		};
+		328F87792900FCD8003BD8FD /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				328F877A2900FCEA003BD8FD /* RealmObject.swift */,
+				328F877C2900FD44003BD8FD /* RealmManager.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		32F01ED128FDEA2400F1DF59 = {
@@ -147,11 +169,11 @@
 		32F01EDC28FDEA2400F1DF59 /* BroadApps */ = {
 			isa = PBXGroup;
 			children = (
-				328E78FB28FFC74E0035AAD7 /* Assembly */,
+				328F87782900FCAD003BD8FD /* AssemblyLayer */,
 				328E78EB28FF71C20035AAD7 /* DetaiPhotoModule */,
 				32F01EF128FDEEA800F1DF59 /* RandomPhotoModule */,
 				328E78F228FFA1230035AAD7 /* LikedPhotoModule */,
-				32F01EFB28FDFDC200F1DF59 /* NetworkService */,
+				328F87772900FC82003BD8FD /* ServiceLayer */,
 				32F01EF428FDEEE400F1DF59 /* Extension */,
 				32F01EFF28FE123A00F1DF59 /* Source */,
 				32F01EE628FDEA2700F1DF59 /* Assets.xcassets */,
@@ -350,7 +372,9 @@
 				32F01EDE28FDEA2400F1DF59 /* AppDelegate.swift in Sources */,
 				32F01F0528FE1B4400F1DF59 /* AssemblyModuleBuilder.swift in Sources */,
 				328E78ED28FF80760035AAD7 /* Router.swift in Sources */,
+				328F877D2900FD44003BD8FD /* RealmManager.swift in Sources */,
 				328E78EA28FF71B70035AAD7 /* DetailPhotoViewController.swift in Sources */,
+				328F877B2900FCEA003BD8FD /* RealmObject.swift in Sources */,
 				328E78F628FFB4F20035AAD7 /* LikedTableViewCell.swift in Sources */,
 				32F01EF828FDF1E700F1DF59 /* RandomPhotoCollectionViewCell.swift in Sources */,
 				32F01EFE28FDFDE700F1DF59 /* CompilingURL.swift in Sources */,

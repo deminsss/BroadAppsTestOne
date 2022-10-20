@@ -1,9 +1,12 @@
 import UIKit
 import Kingfisher
 
-class DetailPhotoViewController: UIViewController {
+final class DetailPhotoViewController: UIViewController {
     
-    var presenter: DetailPhotoPresenterProtocol! 
+    //MARK: - Property
+    
+    var presenter: DetailPhotoPresenterProtocol!
+    var photoModel = PhotosModel()
 
     private let detailImageView: UIImageView = {
         let imageView = UIImageView()
@@ -40,6 +43,8 @@ class DetailPhotoViewController: UIViewController {
         return barButtonItem
     }()
     
+    //MARK: - ViewDidLoad
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
@@ -47,6 +52,8 @@ class DetailPhotoViewController: UIViewController {
         presenter.setPhoto()
     }
     
+    //MARK: - Add subviews/view property method
+
     private func addViews() {
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
@@ -55,6 +62,8 @@ class DetailPhotoViewController: UIViewController {
         view.addSubviews(detailImageView, detailAutorLabel, detailCreateDateLabel, detailLocationLabel, detailDownloadLabel)
     }
     
+    //MARK: - Add Constraints
+
     private func addConstraints() {
         NSLayoutConstraint.activate([
             detailImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -81,14 +90,18 @@ class DetailPhotoViewController: UIViewController {
         ])
     }
     
+    //MARK: - @objc methods
+
     @objc func liked(sender: Any) {
         likeBarItem.image = UIImage(named: "blackHeart")
+        presenter.saveModel(model: photoModel)
     }
-    
-    
 }
 
+//MARK: - Set info method
+
 extension DetailPhotoViewController: DetailPhotoViewProtocol {
+    
     func setPhoto(photo: UnsplashPhoto?) {
         detailImageView.kf.setImage(with: URL(string: photo?.urls.small ?? ""))
         detailAutorLabel.text = "Имя автора: " + (photo?.user?.name ?? "")
@@ -97,5 +110,9 @@ extension DetailPhotoViewController: DetailPhotoViewProtocol {
             detailLocationLabel.text = "Местоположение: " + (photo?.location?.name)!
         }
         detailDownloadLabel.text = "Количество скачиваний: " + "\(photo!.downloads)"
+        let comingPhotoModel = PhotosModel()
+        comingPhotoModel.autorName = photo?.user?.name ?? ""
+        comingPhotoModel.imageURL = photo?.urls.small ?? ""
+        photoModel = comingPhotoModel
     }
 }

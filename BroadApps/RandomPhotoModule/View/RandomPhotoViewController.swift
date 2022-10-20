@@ -1,7 +1,9 @@
 import UIKit
 import Kingfisher
 
-class RandomPhotoViewController: UIViewController {
+final class RandomPhotoViewController: UIViewController {
+    
+    //MARK: - Property
     
     var presenter: RandomPhotoPresenterProtocol!
     private var timer: Timer?
@@ -10,6 +12,7 @@ class RandomPhotoViewController: UIViewController {
         var searchBar = UISearchBar()
         searchBar.placeholder = "Search"
         searchBar.barStyle = .black
+        searchBar.isTranslucent = true
         searchBar.searchTextField.leftView?.tintColor = .black
         searchBar.searchTextField.backgroundColor = .white
         searchBar.layer.cornerRadius = 10
@@ -26,9 +29,10 @@ class RandomPhotoViewController: UIViewController {
         return colletionView
     }()
     
+    //MARK: - ViewDidLoad
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(navigationController)
         view.backgroundColor = .white
         addViews()
         addConstraints()
@@ -82,10 +86,17 @@ class RandomPhotoViewController: UIViewController {
     }
 }
 
+//MARK: - Implementation tableview
+
 extension RandomPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    //MARK: - Number of cells
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.photosResult?.count ?? 0
     }
+    
+    //MARK: - Cells implementation
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = randomPhotoCollectionView.dequeueReusableCell(withReuseIdentifier: RandomPhotoCollectionViewCell.identifier,
@@ -96,11 +107,15 @@ extension RandomPhotoViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
     
+    //MARK: - Push navigation method
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let photo = presenter.photosResult?[indexPath.row]
         presenter.tapOnThePhoto(navigationConroller: navigationController!, photo: photo)
     }
 }
+
+//MARK: - Implementation searchBar
 
 extension RandomPhotoViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -111,12 +126,20 @@ extension RandomPhotoViewController: UISearchBarDelegate {
     }
 }
 
+//MARK: - Get photos
+
 extension RandomPhotoViewController: RandomPhotoViewProtocol {
     func sucess() {
         randomPhotoCollectionView.reloadData()
     }
     
     func failure(error: Error) {
-        
+        alert(title: "Ой", message: "Что-то пошло не так, попробуйте позже", style: .default)
+    }
+    
+    func alert(title: String, message: String, style: UIAlertViewStyle) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alert, animated: true)
     }
 }

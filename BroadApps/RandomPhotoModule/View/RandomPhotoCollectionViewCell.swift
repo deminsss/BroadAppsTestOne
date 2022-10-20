@@ -1,9 +1,10 @@
 import UIKit
 
-class RandomPhotoCollectionViewCell: UICollectionViewCell {
+final class RandomPhotoCollectionViewCell: UICollectionViewCell {
+    
+    //MARK: - Property
     
     static let identifier = "Cell"
-    //MARK: - Property
     
     var randomPhotoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -16,20 +17,21 @@ class RandomPhotoCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-//MARK: - Init
+    
+    //MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews(randomPhotoImageView, randomPhotoLabel)
     }
+    
     //MARK: - LayoutSubviews
     
     override func layoutSubviews() {
         super.layoutSubviews()
         addConstraints()
     }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
     //MARK: - Constraints
     
     func addConstraints() {
@@ -43,4 +45,10 @@ class RandomPhotoCollectionViewCell: UICollectionViewCell {
             randomPhotoLabel.centerXAnchor.constraint(equalTo: randomPhotoImageView.centerXAnchor)
         ])
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
+

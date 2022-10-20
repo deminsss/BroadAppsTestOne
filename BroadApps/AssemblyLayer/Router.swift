@@ -1,26 +1,39 @@
 import Foundation
 import UIKit
 
+//MARK: - Router main protocol
+
 protocol RouterMainProtocol {
     var assemblyBuilder: AssemblyBuilder? {get set}
     var tabBarController: UITabBarController? {get set}
 }
+
+//MARK: - Router protocol
 
 protocol RouterProtocol: RouterMainProtocol {
     func initionalViewController()
     func showDetail(navigationController: UINavigationController, photos: UnsplashPhoto?)
 }
 
-class Router: RouterProtocol {
+//MARK: - Router protocol
+
+
+final class Router: RouterProtocol {
+    
+    //MARK: - Property
 
     var tabBarController: UITabBarController?
     var assemblyBuilder: AssemblyBuilder?
     
+    //MARK: - Router init
+
     init(tabBarController: UITabBarController?, assamblyBuilder: AssemblyBuilder?) {
         self.tabBarController = tabBarController
         self.assemblyBuilder = assamblyBuilder
     }
     
+    //MARK: - Initional method
+
     func initionalViewController() {
         guard let tabBarController = tabBarController else { return }
         guard let randomPhotoVC = assemblyBuilder?.createRandomPhotoModule(router: self) else { return }
@@ -37,11 +50,16 @@ class Router: RouterProtocol {
         tabBarController.tabBar.tintColor = .black
     }
     
-    func showDetail(navigationController: UINavigationController,photos: UnsplashPhoto?) {
-        guard let detailViewController = assemblyBuilder?.createDetailPhotoModule(router: self, photo: photos) else { return }
+    //MARK: - Show detail viewcontroller method
+
+    func showDetail(navigationController: UINavigationController, photos: UnsplashPhoto?) {
+        guard let detailViewController = assemblyBuilder?.createDetailPhotoModule(router: self,
+                                                                                  photo: photos) else { return }
         navigationController.pushViewController(detailViewController, animated: true)
     }
     
+    //MARK: - Create viewcontrollers to tabbar controller
+
     private func createViewConreoller(rootViewController: UIViewController, title: String, image: UIImage) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem = UITabBarItem(title: title,
@@ -49,6 +67,5 @@ class Router: RouterProtocol {
                                                        selectedImage: image)
         return navigationController
     }
-    
 }
 

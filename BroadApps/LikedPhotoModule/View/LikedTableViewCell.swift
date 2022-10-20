@@ -2,19 +2,18 @@ import UIKit
 
 final class LikedTableViewCell: UITableViewCell {
     
-    //MARK: - Variables
-    static let identifier = "Cell"
-    
     //MARK: - Property
     
-    private let likedImageView: UIImageView = {
+    static let identifier = "Cell"
+    
+    var likedImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    private let likedLabel: UILabel = {
+    var likedLabel: UILabel = {
         let label = UILabel()
-        label.text = "aaa"
         return label
     }()
     
@@ -31,18 +30,19 @@ final class LikedTableViewCell: UITableViewCell {
         addConstraints()
     }
     
-    
-    
-    //MARK: - Constraints
+    //MARK: - Add Constraints
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
             likedImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             likedImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            likedImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 20),
+            likedImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            likedImageView.widthAnchor.constraint(equalToConstant: self.frame.width / 5),
             
-            likedLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            likedLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            likedLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            likedLabel.leadingAnchor.constraint(equalTo: likedImageView.trailingAnchor, constant: 20),
+            likedLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            likedLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
         ])
     }
     
