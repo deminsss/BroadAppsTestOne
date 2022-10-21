@@ -34,7 +34,7 @@
 
 <img src="https://user-images.githubusercontent.com/106489252/196961917-0d2070f7-8a88-4b7d-b3f8-a7f033ef83e7.png" alt="drawing" width="200"/>
 
-4) Добавление в избранной (сердечко в NavigattionBar)
+4) Добавление в избранное (сердечко в NavigattionBar)
 
 <img src="https://user-images.githubusercontent.com/106489252/196961912-ed6ff33e-14d8-4f0f-aea3-1f0c8f53a348.png" alt="drawing" width="200"/>
 
